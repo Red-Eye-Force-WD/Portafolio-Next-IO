@@ -9,20 +9,33 @@ export class InfoPaginasService {
 
   info: InfoPagina = {};
   cargada = false;
+  equipo: any[] = [];
 
   constructor( private http: HttpClient) {
 
-    // console.log('Info Página cargada');//
+    this.cargarInfo();
+    this.cargarEquipo();
+  }
 
+ private cargarInfo () {
+ // leer el archivo Json
+  this.http.get('assets/data/data-pagina.json')
+ .subscribe( (resp: InfoPagina ) => {
+
+   this.cargada = true;
+   this.info = resp;
+  });
+ }
+
+
+private cargarEquipo () {
     // leer el archivo Json
-    this.http.get('assets/data/data-pagina.json')
-    .subscribe( (resp: InfoPagina ) => {
-      this.cargada = true;
-      this.info = resp;
-      console.log(resp);
+      this.http.get('https://angular-html-nextio.firebaseio.com/equipo.json')
+      .subscribe( (resp: any[]) => {
 
+      this.equipo = resp;
+      // console.log(resp);
 
-    });
-
+     });
   }
 }
