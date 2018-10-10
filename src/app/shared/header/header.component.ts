@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InfoPaginasService } from '../../services/info-paginas.service';
-import { InfoPagina } from '../../interfaces/info-pagina.interface';
+import { InfoPagina } from '../../interfaces/info.pagina.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +10,17 @@ import { InfoPagina } from '../../interfaces/info-pagina.interface';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor( public _servicio: InfoPaginasService) { }
+  constructor( public _servicio: InfoPaginasService,
+               private router: Router) { }
 
   ngOnInit() {
   }
+  buscarProducto( termino: string) {
+    if ( termino.length < 1) {
+      return;
 
+    }
+    this.router.navigate(['/search', termino]);
+    console.log(termino);
+  }
 }
